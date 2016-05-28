@@ -1,0 +1,60 @@
+/****************
+* Home Page
+****************/
+
+.icon_tab>img{
+	  height: 50px;
+	  width: 50px;
+}
+
+/*Plan a trip search*/
+/*------------------*/
+.trip_plan_search{
+
+	/*width: 100%;*/
+	margin: 0 auto 0 50px;
+}
+
+/*Recent blog preview*/
+/*-------------------*/
+
+.blog-preview>img{
+	margin: 0 50px 50px 50px;
+	width: 300px;
+	height: 300px;
+}
+
+.blog-preview{
+	border-bottom: 50px;
+}
+
+
+/*Login Form on Home Page*/
+/*------------------------*/
+
+.modal-footer {   border-top: 0px; }
+
+.login-body{
+	padding-right: 30px;
+}
+
+.register-ad{
+	border-style: ridge;
+	border-color: #666666;
+	border-width: 0 0 0 1px;
+	padding-left: 40px;
+}
+
+/********
+* ABOUT
+*********/
+
+/*.about-header>img{
+	width: 60%;
+	height: 40%;
+}
+*/
+/*.team-member>img{
+	width: 750px;
+	height: 450px;
+}*/
