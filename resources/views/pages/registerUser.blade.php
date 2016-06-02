@@ -11,6 +11,7 @@
             </h2>
             <hr>
         </div>
+
         <form class="form-horizontal" method="POST" action="{{ url('/').'/reg/store'}}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -76,6 +77,7 @@
                 </div>
             </div>
         </form>
+        
         <div class="clearfix"></div>
     </div>
 </div>

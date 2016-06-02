@@ -1,9 +1,12 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <?php
 
 $festivalTypes = array("Religeous", "Cultural", "Traditional", "Any");
 
 ?>
-
+<form class="form-horizontal" method="POST" action="{{ url('/').'/search_festival'}}">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 <form class="form-horizontal" role="form">
     
   <div class="form-group">
@@ -23,14 +26,14 @@ $festivalTypes = array("Religeous", "Cultural", "Traditional", "Any");
     <div class="col-sm-4 selectContainer">
        <select id="festival_division" class="form-control" required>
           <option selected disabled>Choose a Division</option>
-          <option>Dhaka</option>
-          <option>Chittagong</option>
-          <option>Sylhet</option>
-          <option>Barisal</option>
-          <option>Rajshahi</option>
-          <option>Khulna</option>
-          <option>Rangpur</option>
-          <option>Mymensingh</option>
+          	  <option value='Dhaka'>Dhaka</option>
+		  <option value='Chittagong'>Chittagong</option>
+		  <option value='Sylhet'>Sylhet</option>
+		  <option value='Barisal'>Barisal</option>
+		  <option value='Rajshahi'>Rajshahi</option>
+		  <option value='Khulna'>Khulna</option>
+		  <option value='Rangpur'>Rangpur</option>
+		  <option value='Mymensingh'>Mymensingh</option>
         </select>
     </div>
   </div>
@@ -39,8 +42,7 @@ $festivalTypes = array("Religeous", "Cultural", "Traditional", "Any");
     <label class="control-label col-sm-1" for="festival_district">District:</label>
       <div class="col-sm-4 selectContainer">
        		<select id="festival_district" class="form-control" required>
-                  <option disabled>Choose a District</option>
-		  <option selected>Any</option>
+                  <option vaule =''selected disabled>choose a district</option>
                   
               </select>
     	</div>
@@ -50,8 +52,7 @@ $festivalTypes = array("Religeous", "Cultural", "Traditional", "Any");
 		<label class="control-label col-sm-1" for="festival_upazilla">Upazilla:</label>
      	<div class="col-sm-4 selectContainer">
   		<select id="festival_upazilla" class="form-control" required>
-              <option disabled>Choose an Upazilla</option>
-	      <option selected>Any</option>
+              <option vaule =''selected disabled>choose an Upazilla</option>
           </select>
 		</div>
 	</div>
@@ -84,3 +85,53 @@ $festivalTypes = array("Religeous", "Cultural", "Traditional", "Any");
   </div>
 
 </form>
+  <script>
+$('#festival_division').on('change',function(e){
+    console.log(e);
+   
+    var division_name=e.target.value;
+    //$('#accommodation_district').empty();
+    $('#festival_district').empty();
+    $('#festival_upazilla').empty();
+    
+    $('#festival_district').append($('<option>', {
+	value: "Any",
+	text: 'Any'
+    }));
+    $('#festival_upazilla').append($('<option>', {
+	value: "Any",
+	text: 'Any'
+    }));
+   
+    //$('#accommodation_upazilla').empty();
+    $.getJSON('ajax_district?division_name='+division_name,function(data){
+	 //console.log(data);
+	
+	$.each(data ,function(index,district_object){
+	   
+	   $('#festival_district').append('<option value="'+district_object.DISTRICT_NAME+'">'+district_object.DISTRICT_NAME+'</option>');
+	   
+	});
+	
+    });
+});
+</script>
+<script>
+$('#festival_district').on('change',function(e){
+    console.log(e);
+   
+    var district_name=e.target.value;
+    //$('#accommodation_district').empty();
+    $.getJSON('ajax_upazilla?district_name='+district_name,function(data){
+	 //console.log(data);
+	$('#festival_upazilla').empty();
+	$('#festival_upazilla').append('<option value="'+"Any"+'">'+"Any"+'</option>');
+	$.each(data ,function(index,upazilla_object){
+	   
+	   $('#festival_upazilla').append('<option value="'+upazilla_object.UPAZILLA_NAME+'">'+upazilla_object.UPAZILLA_NAME+'</option>');
+	   
+	});
+	
+    });
+});
+</script>

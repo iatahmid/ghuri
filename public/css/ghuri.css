@@ -45,6 +45,45 @@
 	padding-left: 40px;
 }
 
+
+/*
+* Result Showing Page
+*/
+
+.result-navbar{
+
+	/*position: fixed;
+	z-index: 10;*/
+}
+
+.result-block{
+
+	/*position: absolute;*/
+
+}
+
+.rating-round{
+	border-radius: 50%;
+	height: 75px;
+	width: 75px;
+	color: #000033;
+	background-color: #66ff99;
+	/*display: table-cell;*/
+	/*display: inline-block;*/
+
+}
+
+.carousel-control.left, .carousel-control.right {
+    background-image: none;
+    color: red;
+}
+
+/*.rating-review{
+	vertical-align: middle;
+}
+*/
+
+
 /********
 * ABOUT
 *********/

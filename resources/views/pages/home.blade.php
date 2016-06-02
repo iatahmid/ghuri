@@ -171,7 +171,7 @@
             </div>
         </div><!--./row-->
 
-        <div class="row">
+        <div class="row" id="login_section">
             <div class="box">
                 <div class="col-lg-12">
                     <hr>
@@ -183,23 +183,32 @@
                     
                     <div class="col-sm-6 login-body">
                         <div class="modal-body">
-                            <form class="form col-md-12 center-block" role="form" method="POST" action="{{ url('/').'/login'}}">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                                <div class="form-group">
-                                  <input type="email" class="form-control input-lg" placeholder="Email">
+                            @if(count($errors))
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach($errors->all() as $error)
+                                          <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-
+                            @endif
+                            
+                            {!! Form::open(array('route' => 'handleLogin')) !!}
                                 <div class="form-group">
-                                  <input type="password" class="form-control input-lg" placeholder="Password">
+                                    {!! Form::label('email') !!}
+                                    {!! Form::text('email', null, array('class' => 'form-control')) !!}
                                 </div>
                                 
                                 <div class="form-group">
-                                  <button class="btn btn-primary btn-lg btn-block">Sign In</button>
-                                  <span class="pull-right"><a href="reg">Register</a></span><span><a href="#">Need help?</a></span>
+                                  {!! Form::label('password') !!}
+                                  {!! Form::password('password', array('class' => 'form-control')) !!}
                                 </div>
-                            </form>
+                                
+                                {!! Form::token() !!}
+                                {!! Form::submit(null, array('class' => 'btn btn-default')) !!}
+                            {!! Form::close() !!}
                         </div>
+                        
                         <div class="modal-footer">
                             <div class="col-md-12">
                               <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>

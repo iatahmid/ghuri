@@ -27,7 +27,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('users.registerUser');
+        return view('auth.registeruser');
+        //return view('pages.registerUser');
     }
 
     /**
@@ -40,9 +41,10 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         //$this->validate($request, User::$create_validation_rules);
-        $data = $request->only('name', 'email', 'password');
+        $data = $request->only('name', 'username', 'email', 'password');
         $data['password'] = bcrypt($data['password']);
         $user = User::create($data);
+
         if($user){
           \Auth::login($user);
           return redirect()->route('home');
@@ -98,6 +100,6 @@ class UsersController extends Controller
 
     public function showHome()
     {
-        return view('users.home');
+        return view('pages.home');
     }
 }

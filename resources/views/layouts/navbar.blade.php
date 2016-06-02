@@ -30,6 +30,15 @@
                 <li>
                     <a href="contact">Contact</a>
                 </li>
+                @if(\Auth::check())
+                  <li>
+                    <a href="logout">Logout</a> 
+                  </li>
+                @else
+                  <li>
+                    <a href="#login_section">Login</a> 
+                  </li>
+                @endif
             </ul>
         </div>
         <!-- /.navbar-collapse -->

@@ -22,7 +22,7 @@
             </div>
         @endif
         
-        {!! Form::open(array('route' => 'users.store')) !!}
+        {!! Form::open(array('route' => 'handlereg')) !!}
         
         <div class="form-group">
             {!! Form::label('name', 'Username') !!}
