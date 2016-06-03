@@ -92,6 +92,8 @@ Route::get('show-result',function(){
     return view ('results.default');
 });
 
+Route::get('req-spot', array('uses' => 'TouristSpotController@getSpotInfo'));
+Route::get('req-guide', array('uses' => 'GuideController@getGuideInfo'));
 
 
 // route to show the login form

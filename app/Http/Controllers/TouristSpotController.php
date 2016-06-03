@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\TouristSpotModel;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Input;
 
 use App\Http\Requests;
 
@@ -27,7 +28,8 @@ class TouristSpotController extends Controller
             foreach($q1 as $q)
             {
                 //echo gettype($q);
-                $reviews[] = array( 'SPOT_NAME'=>$q->SPOT_NAME,
+                $reviews[] = array( 'SPOT_ID'=>$q->SPOT_ID,
+                                    'SPOT_NAME'=>$q->SPOT_NAME,
                                     'DESCRIPTION'=> $q->DESCRIPTION, 
                                     'RATING'=>$q->RATING, 
                                     'USER'=>$q->USER,
@@ -70,6 +72,62 @@ class TouristSpotController extends Controller
             
         }
 
-        return view('showTouristSpot',array('reviews' => $reviews, 'photos' => $photos, 'avgRatings' => $avgRatings));
+        return view('results.showTouristSpot',array('reviews' => $reviews, 'photos' => $photos, 'avgRatings' => $avgRatings));
+    }
+
+    public function getSpotInfo()
+    {
+        $spot_id = Input::get('id');
+        
+        $photoResult = TouristSpotModel::getPhotos($spot_id);
+        $reviewResult = TouristSpotModel::getReviews($spot_id);
+        $avgRatingResult = TouristSpotModel::getAvgRating($spot_id);
+        $guideResult = TouristSpotModel::getGuides($spot_id);
+
+
+        $photos = array();
+        $spot_name = "";
+        foreach($photoResult as $q)
+        {
+            $photos[] = array( 'SPOT_NAME'=>$q->SPOT_NAME,
+                                'PHOTO_FILE'=> $q->PHOTO_FILE, 
+                                'UPLOADER'=>$q->name
+                            );
+            $spot_name = $q->SPOT_NAME;
+        }        
+        //print_r($photos);
+
+        $reviews = array();
+        foreach($reviewResult as $q)
+        {
+            $reviews[] = array( 'SPOT_NAME'=>$q->SPOT_NAME,
+                                'REVIEWER'=>$q->name,
+                                'DESCRIPTION'=> $q->DESCRIPTION, 
+                                'RATING'=>$q->RATING
+                            );
+        }
+
+        $rating = array();
+        foreach($avgRatingResult as $q)
+        {
+            $rating['avg'] = $q->avgRating;
+        }
+
+        $guides = array();
+        foreach($guideResult as $q)
+        {
+            $guides[] = array( 'id'=>$q->GUIDE_ID,
+                                'name'=>$q->GUIDE_NAME,
+                                'contact_info'=> $q->CONTACT_INFO
+                            );
+        }
+        
+        return view('results.showTouristSpotDetails',
+                        array(  'photos' => $photos,
+                                'reviews' => $reviews, 
+                                'avgRating' => $rating,
+                                'guides' => $guides,
+                                'spot' => $spot_name));
+
     }
 }

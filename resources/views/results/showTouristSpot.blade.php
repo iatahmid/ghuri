@@ -69,7 +69,7 @@
             <h2 class="intro-text text-center">
                 <?php $avgRating = round($ratingBlock[$spot], 2); ?>
                 <?php $spot_id = $spotReviewId[$spot]['id']; ?>
-                <a href = <?php echo "search-spot?id=".$spot_id; ?>> {{ $spot }} </a> |   
+                <a href = <?php echo "req-spot?id=".$spot_id; ?>> {{ $spot }} </a> |   
                 <strong> Rating: {{ $avgRating }} </strong>
             </h2>
             <hr>
