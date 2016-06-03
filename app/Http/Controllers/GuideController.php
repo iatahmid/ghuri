@@ -36,6 +36,7 @@ class GuideController extends Controller
                                 'name'=>$q->GUIDE_NAME,
                                 'contact_info'=> $q->CONTACT_INFO,
                                 'working_area' => $q->SPOT_NAME,
+                                'spot_id' => $q->SPOT_ID
                                 );
             $i++;
         }

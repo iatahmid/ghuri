@@ -83,7 +83,8 @@ class TouristSpotController extends Controller
         $reviewResult = TouristSpotModel::getReviews($spot_id);
         $avgRatingResult = TouristSpotModel::getAvgRating($spot_id);
         $guideResult = TouristSpotModel::getGuides($spot_id);
-
+        $accommodationResult = TouristSpotModel::getAccommodations($spot_id);
+        $restaurantResult = TouristSpotModel::getRestaurants($spot_id);
 
         $photos = array();
         $spot_name = "";
@@ -121,13 +122,50 @@ class TouristSpotController extends Controller
                                 'contact_info'=> $q->CONTACT_INFO
                             );
         }
+
+        $accommodations = array();
+        foreach($accommodationResult as $q)
+        {
+            $accommodations[] = array( 'id'=>$q->PROVIDER_ID,
+                                'name'=>$q->ACCOMODATION_NAME,
+                                'type'=>$q->ACCOMODATION_TYPE,
+                                'contact_info'=>$q->CONTACT_INFO,
+                                'facebook_link'=>$q->FACEBOOK_LINK,
+                                'address'=>$q->ADDRESS,
+                                'spot'=>$q->SPOT_NAME,
+                                'upazilla'=>$q->UPAZILLA_NAME,
+                                'district'=>$q->DISTRICT_NAME
+                            );
+        }
+
+        $restaurants = array();
+        foreach($restaurantResult as $q)
+        {
+            $restaurants[] = array( 'id'=>$q->RESTAURANT_ID,
+                                'name'=>$q->RESTAURANT_NAME,
+                                'specialization'=>$q->SPECIALIZATION,
+                                'contact_info'=>$q->CONTACT_INFO,
+                                'facebook_link'=>$q->FACEBOOK_LINK,
+                                'address'=>$q->ADDRESS,
+                                'spot'=>$q->SPOT_NAME,
+                                'upazilla'=>$q->UPAZILLA_NAME,
+                                'district'=>$q->DISTRICT_NAME
+                            );
+        }
         
         return view('results.showTouristSpotDetails',
                         array(  'photos' => $photos,
                                 'reviews' => $reviews, 
                                 'avgRating' => $rating,
                                 'guides' => $guides,
+                                'accommodations' => $accommodations,
+                                'restaurants' => $restaurants,
                                 'spot' => $spot_name));
 
     }
+    /*'room_price'=>$q->PRICE,
+    'room_rating'=>$q->RATING,
+    'room_count'=> $q->NO_OF_ROOMS,
+    'room_capacity'=> $q->CAPACITY,
+    'room_type'=> $q->ROOM_TYPE*/
 }

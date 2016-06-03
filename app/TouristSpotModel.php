@@ -177,14 +177,62 @@ class TouristSpotModel extends Model
         public static function getGuides($spot_id)
         {
 
-            $avgRating = DB::select(
+            $guides = DB::select(
                         'Select GUIDE_ID, GUIDE_NAME, CONTACT_INFO
                         from guide G
                         where G.SPOT_ID = ?
                         Order By GUIDE_NAME', [$spot_id]
                         );
 
-            return $avgRating;
+            return $guides;
         } 
-        
+
+        public static function getAccommodations($spot_id)
+        {
+
+            $accommodation = DB::select(
+                        'Select AP.PROVIDER_ID as PROVIDER_ID, ACCOMODATION_NAME, ACCOMODATION_TYPE,
+                        CONTACT_INFO, FACEBOOK_LINK, ADDRESS, 
+                        SPOT_NAME, UPAZILLA_NAME, DISTRICT_NAME
+                        from accommodation_provider AP
+                        Join tourist_spot TS
+                        On (AP.UPAZILLA_ID = TS.UPAZILLA_ID)
+                        Join upazilla U
+                        On (AP.UPAZILLA_ID = U.UPAZILLA_ID)
+                        where TS.SPOT_ID = ?
+                        Order By ACCOMODATION_NAME', [$spot_id]
+                        );
+
+            return $accommodation;
+        }
+
+        public static function getRestaurants($spot_id)
+        {
+
+            $restaurants = DB::select(
+                        'Select RESTAURANT_ID, RESTAURANT_NAME, SPECIALIZATION,
+                        CONTACT_INFO, FACEBOOK_LINK, ADDRESS,
+                        SPOT_NAME, UPAZILLA_NAME, DISTRICT_NAME
+                        from restaurant R
+                        Join tourist_spot TS
+                        On (R.UPAZILLA_ID = TS.UPAZILLA_ID)
+                        Join upazilla U
+                        On (R.UPAZILLA_ID = U.UPAZILLA_ID)
+                        where TS.SPOT_ID = ?
+                        Order By RESTAURANT_NAME', [$spot_id]
+                        );
+
+            return $restaurants;
+        }
+
+/*
+        PRICE, PSC.RATING RATING,
+        NO_OF_ROOMS, ROOM_TYPE, CAPACITY
+
+
+        Left Outer Join provider_specification_connection PSC
+        On (AP.PROVIDER_ID = PSC.PROVIDER_ID)
+        Join accommodation_specification ASP
+        On (PSC.SPECIFICATION_ID = ASP.SPECIFICATION_ID)
+*/        
 }

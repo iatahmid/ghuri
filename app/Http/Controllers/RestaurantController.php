@@ -4,13 +4,57 @@ namespace App\Http\Controllers;
 use App\RestaurantModel;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Input;
 
 use App\Http\Requests;
 
 
 class RestaurantController extends Controller
 {
-    
+    public function getRestaurantInfo()
+    {
+
+        $restaurant_id = Input::get('id');
+        
+        $foodInfoResult = RestaurantModel::getFoodInfo($restaurant_id);
+        $restaurantResult = RestaurantModel::getRestaurantInfo($restaurant_id);
+
+        $food_infos = array();
+        foreach($foodInfoResult as $q)
+        {
+            $food_infos[] = array( 
+                                    'name' => $q->FOOD_NAME,
+                                    'type' => $q->FOOD_TYPE,
+                                    'price' => $q->PRICE,
+                                    'proportion' => $q->PROPORTION,
+                                    'rating' => $q->RATING,
+                            );
+            
+        }
+
+        $restaurant_basic;
+        foreach($restaurantResult as $q)
+        {
+            $restaurant_basic = array(
+                                'id'=>$q->RESTAURANT_ID,
+                                'name'=>$q->RESTAURANT_NAME,
+                                'specialization'=>$q->SPECIALIZATION,
+                                'contact_info'=> $q->CONTACT_INFO,
+                                'facebook_link' => $q->FACEBOOK_LINK,
+                                'address' => $q->ADDRESS,
+                                'spot_id' => $q->SPOT_ID,
+                                'spot_name' => $q->SPOT_NAME,
+                                'upazilla' => $q->UPAZILLA_NAME,
+                                'district' => $q->DISTRICT_NAME
+                                );
+        }        
+
+        return view('results.showRestaurantDetails',
+                        array(  
+                                'foodInfos' => $food_infos,
+                                'restaurant' => $restaurant_basic
+                            ));
+    }
     
     public function searchRestaurant(Request $request)
     {

@@ -7,10 +7,15 @@
         <div class="col-lg-12">
             <hr>
             
-            <h2 class="intro-text text-center">{{ $guide['name'] }} |
-                <strong>{{ $guide['working_area'] }}</strong>
+            <h2 class="intro-text text-center">
+                {{ $guide['name'] }} |
+                <a href=<?php echo "req-spot?id=".$guide['spot_id']; ?>> 
+                    <strong>{{ $guide['working_area'] }}</strong>
+                </a>
             </h2>
-            <h6 class="text-center"> Ph: {{ $guide['contact_info'] }} </h6>
+            <h6 class="text-center"> 
+                <span class="glyphicon glyphicon-earphone"></span> {{ $guide['contact_info'] }} 
+            </h6>
             <hr>
 
             @foreach($guideInfos as $guideInfo)

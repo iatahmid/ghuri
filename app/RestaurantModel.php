@@ -9,6 +9,46 @@ class RestaurantModel extends Model
     protected $primaryKey = 'RESTAURANT_ID';
     protected $table = 'restaurant';
     public $timestamps = false;
+
+
+    public static function getFoodInfo($restaurant_id)
+    {
+
+        $foodInfos = DB::select(
+                                    'Select F.NAME as FOOD_NAME, FOOD_TYPE,
+                                    PRICE, PROPORTION, RATING
+                                    from restaurant R
+                                    Join restaurant_food_connection RFC
+                                    On (R.RESTAURANT_ID = RFC.RESTAURANT_ID)
+                                    Join food F
+                                    On (F.FOOD_ID = RFC.FOOD_ID)
+                                    where R.RESTAURANT_ID = ?
+                                    Order By F.NAME', [$restaurant_id]
+                                    );
+
+        return $foodInfos;
+
+    }
+
+    public static function getRestaurantInfo($restaurant_id)
+    {
+
+        $restaurant = DB::select(
+                                    'Select R.RESTAURANT_ID as RESTAURANT_ID, RESTAURANT_NAME, SPECIALIZATION,
+                                    CONTACT_INFO, FACEBOOK_LINK, ADDRESS, 
+                                    TS.SPOT_ID as SPOT_ID, SPOT_NAME, UPAZILLA_NAME, DISTRICT_NAME
+                                    from restaurant R
+                                    Join tourist_spot TS
+                                    On (R.UPAZILLA_ID = TS.UPAZILLA_ID)
+                                    Join upazilla U
+                                    On (R.UPAZILLA_ID = U.UPAZILLA_ID)
+                                    where R.RESTAURANT_ID = ?', [$restaurant_id]
+                                    );
+
+        return $restaurant;
+
+    }
+
     public static function findRestaurant($upazilla,$district,$division,$food_type) //At least division has to be chosen 
     {
 

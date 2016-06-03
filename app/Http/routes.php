@@ -94,6 +94,8 @@ Route::get('show-result',function(){
 
 Route::get('req-spot', array('uses' => 'TouristSpotController@getSpotInfo'));
 Route::get('req-guide', array('uses' => 'GuideController@getGuideInfo'));
+Route::get('req-accommodation', array('uses' => 'AccommodationController@getAccommodationInfo'));
+Route::get('req-restaurant', array('uses' => 'RestaurantController@getRestaurantInfo'));
 
 
 // route to show the login form
